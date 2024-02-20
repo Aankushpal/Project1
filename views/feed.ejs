@@ -1,0 +1,33 @@
+  <% include ./partials/header.ejs %>
+
+    <div class="container py-3">
+        <h4 class="mb-4">Feed</h4>
+        <p style="margin-top: -22px;">All posts .</p>
+        <hr>
+        <% allposts.reverse().forEach(function(post) { %>
+            <div class="card mt-2" style="width: 45rem;">
+                <div class="card-body">
+                  <div style="width: fit-content; display: flex; gap: 1vw; align-items: center;" id="name">
+                    <div style="width: 3vw; height: 3vw; display: flex;" class="image" >
+                      <!-- Check if post.userid exists and has image property -->
+                    <% if (post.userid && post.userid.image) { %>
+                      <img src="/images/uploads/<%= post.userid.image %>" alt="">
+                  <% } else { %>
+                      <!-- If image is missing, display a placeholder or handle it in another way -->
+                      <img src="/images/default-profile-image.jpg" alt="">
+                  <% } %>
+              </div>
+              <!-- Check if post.userid exists and has username property -->
+              <% if (post.userid && post.userid.username) { %>
+                  <h5 class="card-title">@<%= post.userid.name %></h5>
+              <% } %>
+                  </div>
+                  <p class="card-text"><%= post.data %></p>
+                  <p style="font-weight: 600;" class="text-primary"><%= post.likes.length %>  Likes </p>
+              <a href="/like/<%= post._id %>" class="btn <%= post.likes.indexOf(user.id) === -1 ? 'text-secondary' : 'text-danger' %>"><i class="ri-heart-fill" id="hrt"></i></a>
+                </div>
+            </div>   
+      <%  }) %> 
+    </div>
+    
+    <% include ./partials/footer.ejs %>

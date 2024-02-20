@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/stylesheets/login.css">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <form action="/register" method="post">
+        <h1>Register Page</h1>
+   
+        <input type="text" name="username" id="username" placeholder="Username">
+        <input type="text" name="name" placeholder="Name">
+        <input type="bio" name="bio" placeholder="Bio">    
+        <input type="email" name="email" placeholder="Email">
+        <input type="date" name="age" placeholder="Age">
+        <input type="password" name="password" placeholder="Password">
+        <input class="submit" type="submit" value="Register Account" id="submit">
+        
+          <a class="forget" href="#">Forgot account?</a>
+
+        <h5>login account?<a href="/login"> Login</a></h5>
+      </form>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js" integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script>
+        var username = document.querySelector("#username");
+    
+        username.addEventListener("input", function(){
+          if(username.value.length > 0){
+            axios.get(`/check/${username.value}`)
+            .then(function(data){
+              if(data.data){
+                username.style.boxShadow = "0 0 0 0.25rem rgba(255,50,50,.7)";
+                document.querySelector('#submit').setAttribute("disabled", true);
+              }
+              else{
+                username.style.boxShadow = "0 0 0 0.25rem rgba(13,110,253,.25)";
+                document.querySelector('#submit').removeAttribute("disabled");
+              }
+            })
+          }
+        })
+      </script>
+  </body>
+</html>

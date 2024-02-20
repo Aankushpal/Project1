@@ -1,0 +1,92 @@
+<% include ./partials/header.ejs %>
+<form id="uploadpic" method="post" action="/upload" enctype="multipart/form-data">
+  <input id="fileinp" type="file" name="image">
+</form>
+<div class="container py-3">
+  <div class="d-flex">
+    <h4 class="mb-4"><%= foundUser.username %></h4>
+  </div>
+  <div class="flex">
+    <div class="parentcircle">
+      <div class="pencil"><i class="ri-pencil-line"></i></div>
+      <div class="image">
+        <img src="./images/uploads/<%= foundUser.image %>" alt="">
+      </div>
+    </div>
+    <div>
+        <h4 style="text-transform: capitalize;">
+          <%= foundUser.name %>
+        </h4>
+        <h6 style="font-weight: 400; margin-top: 5px;"><%= foundUser.bio %></h6>
+      <a  href="/update"><button type="submit" class="mt-3 btn btn-warning" style="font-size: 1vw;">Edit Details</button></a>
+
+      </div>
+    </div>
+    <div class="post mt-4 container-md">
+      <h6>Create a new post.</h6>
+      <div class="row">
+        <div class="col-6">
+          <form action="/post" method="post">
+            <div class="form-floating">
+              <textarea name="post" class="form-control" placeholder="Leave a comment here"
+                id="floatingTextarea"></textarea>
+              <label for="floatingTextarea">What's on your mind ?</label>
+            </div>
+            <button type="submit" class="mt-3 btn btn-primary">Create Post</button>
+          </form>
+        </div>
+      </div>
+  </div>
+  <div class="container mt-4">
+    <h6 class="mb-3">All Posts By You.</h6>
+    <% foundUser.posts.reverse().forEach(function(post){ %>
+      <div class="card mt-3" style="width: 45rem;">
+        <div class="card-body">
+          <div style="width: fit-content; display: flex; gap: 1vw; align-items: center;" id="name">
+            <div style="width: 3vw; height: 3vw; display: flex;" class="image" >
+              <img src="./images/uploads/<%= foundUser.image %>" alt="">
+            </div>
+            <h5 class="card-title">@<%= foundUser.name %></h5>
+          </div>
+          </h5>
+          <p class="card-text">
+            <%= post.data %>
+          </p>
+          <p style="font-weight: 600;" class="text-primary"><%= post.likes.length %> Likes</p>
+          <a href="/like/<%= post._id %>" class="btn <%= post.likes.indexOf(foundUser.id) === -1 ? 'text-secondary' : 'text-danger' %>"><i class="ri-heart-fill" id="hrt"></i></a>
+
+          <form action="/delete/<%= post._id %>" method="post" style="display: inline;">
+            <button type="button" class="ri-delete-bin-6-line delete-button" style="cursor: pointer; margin-left: 1vw; font-size: 1.6vw; color: rgb(228, 40, 40); font-weight: 600; background-color: transparent; border: none;"></button>
+          </form>
+
+        </div>
+      </div>
+      <% }) %>
+  </div>
+  </div>
+  <script>
+    document.querySelector(".pencil")
+    .addEventListener("click", function(){
+      document.querySelector("#fileinp").click();
+    });
+
+    document.querySelector("#fileinp")
+    .addEventListener("change", function(){
+      document.querySelector("#uploadpic").submit();
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Add event listener to all delete buttons
+        document.querySelectorAll('.delete-button').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                if (!confirm("Are you sure ? you want to delete this post?")) {
+                    event.preventDefault(); // Prevent form submission if user cancels
+                } else {
+                    // Submit the form for post deletion
+                    this.closest('form').submit();
+                }
+            });
+        });
+    });
+  </script>
+  <% include ./partials/footer.ejs %>

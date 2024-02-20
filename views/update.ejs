@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/login.css">
+
+</head>
+<body>
+    <a href="/profile"><i class="ri-close-line" style="color: #000; font-size: 2vw; position: absolute; top: 5%; right: 5%;"></i></a>
+    <form action="/update" method="post">
+        <h1>Edit Account Details</h1>
+
+        <label class="profile_details_text" style="color: #000; font-weight: 500;">Username:</label>
+        <input style="border-bottom: 1px solid;" type="text" name="username" disabled placeholder="Username" value="<%= user.username %>">
+        <label class="profile_details_text" style="color: #000; font-weight: 500;">Name:</label>
+        <input style="border-bottom: 1px solid;" type="text" name="name"  placeholder="Name" value="<%= user.name %>">
+        <label class="profile_details_text" style="color: #000; font-weight: 500;">Bio:</label>
+        <input style="border-bottom: 1px solid;" type="text" name="bio" placeholder="bio" value="<%= user.bio %>">
+        <label class="profile_details_text" style="color: #000; font-weight: 500;">Email:</label>
+        <input style="border-bottom: 1px solid;" type="text" name="email" placeholder="bio" value="<%= user.email %>">
+        <input type="submit" value="submit ">
+      </form>
+    
+</body>
+</html>
